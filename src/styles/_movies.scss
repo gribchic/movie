@@ -1,0 +1,10 @@
+.movie-container {
+  &.active {
+    transform: scale(1.05);
+    box-shadow: $active-border;
+  }
+  &:focus {
+    transform: scale(1.05);
+    box-shadow: inset $active-border;
+  }
+}

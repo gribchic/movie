@@ -4,7 +4,7 @@ const Header = () => {
     return (
         <nav className="navbar navbar navbar-dark bg-dark">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">Navbar</a>
+                <span className="navbar-brand text-uppercase" >Filmer</span>
             </div>
         </nav>
     );
