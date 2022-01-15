@@ -1,5 +1,6 @@
 import React from 'react';
 import {filteredMovies} from './helpers';
+
 const ContextApp = React.createContext(null);
 
 
@@ -25,34 +26,9 @@ const initialState = {
 const reducer = (state, action) => {
     switch (action.type) {
         case 'arrowUp':
-            if (state.activeContainer === container.header) {
-                return {...state};
-            }
-            if (state.activeContainer === container.menu) {
-                const menuPosition = state.menuPosition - 1;
-                const activeContainer = menuPosition < 0
-                    ? container.header
-                    : container.menu;
-
-                return {...state, activeContainer, menuPosition};
-            }
-            if (state.activeContainer === container.content) {
-
-            }
-
-            return {...state};
+            return getArrowUpState(state);
         case 'arrowDown':
-            if (state.activeContainer === container.header) {
-                return {...state, activeContainer: container.menu, menuPosition: 0};
-            }
-            if (state.activeContainer === container.menu) {
-                let menuPosition = state.menuPosition === state.genres.length - 1
-                    ? state.menuPosition
-                    : state.menuPosition + 1;
-
-                return {...state, menuPosition}
-            }
-            return {...state}
+            return getArrowDownState(state);
         case 'arrowLeft':
             return getArrowLeftState(state);
         case 'arrowRight':
@@ -70,6 +46,49 @@ const reducer = (state, action) => {
         default:
             return {...state};
     }
+}
+
+function getArrowDownState(state) {
+    let newState;
+
+    switch (state.activeContainer) {
+        case container.header:
+            newState = {...state, activeContainer: container.menu, menuPosition: 0};
+            break;
+        case container.menu:
+            let menuPosition = state.menuPosition === state.genres.length - 1
+                ? state.menuPosition
+                : state.menuPosition + 1;
+
+            newState = {...state, menuPosition}
+            break;
+        default:
+            newState = {...state}
+            break;
+    }
+
+    return newState;
+}
+
+function getArrowUpState(state) {
+    let newState;
+
+    switch (state.activeContainer) {
+        case container.menu:
+            const menuPosition = state.menuPosition - 1;
+            const activeContainer = menuPosition < 0
+                ? container.header
+                : container.menu;
+
+            newState = {...state, activeContainer, menuPosition};
+            break;
+        case container.header:
+        default:
+            newState = {...state};
+            break;
+    }
+
+    return newState;
 }
 
 function getBackState(state) {
@@ -170,9 +189,9 @@ function getArrowLeftState(state) {
                 ? {...state, activeContainer: container.menu, moviePosition}
                 : {...state, moviePosition}
 
-                if (moviePosition > -1) {
-                    focusOnLink(newState.moviesLinks, newState.moviePosition);
-                }
+            if (moviePosition > -1) {
+                focusOnLink(newState.moviesLinks, newState.moviePosition);
+            }
             break;
         case container.header:
         case container.menu:
@@ -188,4 +207,4 @@ function focusOnLink(links, index) {
     links[index].focus();
 }
 
-export {reducer,  initialState, ContextApp};
+export {reducer, initialState, ContextApp};
