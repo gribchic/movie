@@ -1,6 +1,7 @@
 import React from 'react';
+import {filteredMovies} from './helpers';
+const ContextApp = React.createContext(null);
 
-const ContextApp = React.createContext();
 
 const container = {
     header: 0,
@@ -21,20 +22,7 @@ const initialState = {
     moviesLinks: []
 }
 
-
-const filteredMovies = (movies, filter) => {
-    return filter
-        ? movies.filter(movie => movie.genre_ids.indexOf(filter) > -1)
-        : movies
-}
-
-const movieByTitle = (movies, title) => {
-    return movies.filter(movie => movie.title === title)[0];
-}
-
 const reducer = (state, action) => {
-    console.log(action, state);
-
     switch (action.type) {
         case 'arrowUp':
             if (state.activeContainer === container.header) {
@@ -80,7 +68,6 @@ const reducer = (state, action) => {
         case 'saveLinks':
             return {...state, moviesLinks: action.payload};
         default:
-            //throw new Error();
             return {...state};
     }
 }
@@ -201,4 +188,4 @@ function focusOnLink(links, index) {
     links[index].focus();
 }
 
-export {reducer, filteredMovies, initialState, ContextApp, movieByTitle};
+export {reducer,  initialState, ContextApp};

@@ -4,8 +4,9 @@ import Footer from './FooterComponent';
 import Menu from './MenuComponent';
 import useKeyPress from '../shared/useKeyPress';
 import MoviesComponent from './MoviesComponent';
-import {filteredMovies, ContextApp, movieByTitle} from '../shared/reducer';
+import {ContextApp} from '../shared/reducer';
 import MovieDetailsComponent from './MovieDetailsComponent';
+import {filteredMovies, movieByTitle} from '../shared/helpers'
 
 const Main = () => {
     const {state, dispatch} = useContext(ContextApp);
