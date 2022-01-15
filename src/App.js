@@ -1,12 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.scss';
+import React, {useReducer} from 'react';
+import './styles/App.scss';
 import Main from './components/MainComponent';
+import {ContextApp, initialState, reducer} from './shared/reducer';
 
 function App() {
-  return (
-      <Main/>
-  );
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    return (
+        <ContextApp.Provider value={{dispatch, state}}>
+            <Main/>
+        </ContextApp.Provider>
+    );
 }
 
 export default App;

@@ -1,0 +1,26 @@
+.nav-link {
+  color: $white;
+  opacity: .4;
+
+  &.active, &.hover {
+    opacity: 1;
+    &:after {
+    content: "";
+    display: inline-block;
+    $size: 10px;
+    width: $size;
+    height: $size;
+    border: {
+      top: $border;
+      right: $border;
+    }
+    transform: rotate(45deg);
+  }
+  }
+
+  &.active {
+    box-shadow: inset $active-border;
+  }
+
+
+}

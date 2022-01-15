@@ -1,5 +1,8 @@
-$grid-columns: 10;
-@import "~bootstrap/scss/bootstrap";
+@import "variables";
+//@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import "menu";
+@import "movies";
 
 html,
 body {
@@ -23,5 +26,10 @@ body {
   }
   @at-root main {
     flex: 1 0 1%;
+    padding: {
+      left:2rem;
+
+      right:2rem;
+    };
   }
 }
