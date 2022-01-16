@@ -59,7 +59,6 @@ function getArrowDownState(state) {
             let menuPosition = state.menuPosition === state.genres.length - 1
                 ? state.menuPosition
                 : state.menuPosition + 1;
-
             newState = {...state, menuPosition}
             break;
         default:
@@ -148,6 +147,7 @@ function getArrowRightState(state) {
     switch (state.activeContainer) {
         case container.menu:
             let links = document.querySelectorAll('a.movie-container');
+
             newState = {
                 ...state,
                 moviePosition: 0,
