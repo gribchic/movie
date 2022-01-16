@@ -1,6 +1,8 @@
 import React from 'react';
+import {filteredMovies} from './helpers';
 
-const ContextApp = React.createContext();
+const ContextApp = React.createContext(null);
+
 
 const container = {
     header: 0,
@@ -21,50 +23,12 @@ const initialState = {
     moviesLinks: []
 }
 
-
-const filteredMovies = (movies, filter) => {
-    return filter
-        ? movies.filter(movie => movie.genre_ids.indexOf(filter) > -1)
-        : movies
-}
-
-const movieByTitle = (movies, title) => {
-    return movies.filter(movie => movie.title === title)[0];
-}
-
 const reducer = (state, action) => {
-    console.log(action, state);
-
     switch (action.type) {
         case 'arrowUp':
-            if (state.activeContainer === container.header) {
-                return {...state};
-            }
-            if (state.activeContainer === container.menu) {
-                const menuPosition = state.menuPosition - 1;
-                const activeContainer = menuPosition < 0
-                    ? container.header
-                    : container.menu;
-
-                return {...state, activeContainer, menuPosition};
-            }
-            if (state.activeContainer === container.content) {
-
-            }
-
-            return {...state};
+            return getArrowUpState(state);
         case 'arrowDown':
-            if (state.activeContainer === container.header) {
-                return {...state, activeContainer: container.menu, menuPosition: 0};
-            }
-            if (state.activeContainer === container.menu) {
-                let menuPosition = state.menuPosition === state.genres.length - 1
-                    ? state.menuPosition
-                    : state.menuPosition + 1;
-
-                return {...state, menuPosition}
-            }
-            return {...state}
+            return getArrowDownState(state);
         case 'arrowLeft':
             return getArrowLeftState(state);
         case 'arrowRight':
@@ -80,9 +44,51 @@ const reducer = (state, action) => {
         case 'saveLinks':
             return {...state, moviesLinks: action.payload};
         default:
-            //throw new Error();
             return {...state};
     }
+}
+
+function getArrowDownState(state) {
+    let newState;
+
+    switch (state.activeContainer) {
+        case container.header:
+            newState = {...state, activeContainer: container.menu, menuPosition: 0};
+            break;
+        case container.menu:
+            let menuPosition = state.menuPosition === state.genres.length - 1
+                ? state.menuPosition
+                : state.menuPosition + 1;
+
+            newState = {...state, menuPosition}
+            break;
+        default:
+            newState = {...state}
+            break;
+    }
+
+    return newState;
+}
+
+function getArrowUpState(state) {
+    let newState;
+
+    switch (state.activeContainer) {
+        case container.menu:
+            const menuPosition = state.menuPosition - 1;
+            const activeContainer = menuPosition < 0
+                ? container.header
+                : container.menu;
+
+            newState = {...state, activeContainer, menuPosition};
+            break;
+        case container.header:
+        default:
+            newState = {...state};
+            break;
+    }
+
+    return newState;
 }
 
 function getBackState(state) {
@@ -183,9 +189,9 @@ function getArrowLeftState(state) {
                 ? {...state, activeContainer: container.menu, moviePosition}
                 : {...state, moviePosition}
 
-                if (moviePosition > -1) {
-                    focusOnLink(newState.moviesLinks, newState.moviePosition);
-                }
+            if (moviePosition > -1) {
+                focusOnLink(newState.moviesLinks, newState.moviePosition);
+            }
             break;
         case container.header:
         case container.menu:
@@ -201,4 +207,4 @@ function focusOnLink(links, index) {
     links[index].focus();
 }
 
-export {reducer, filteredMovies, initialState, ContextApp, movieByTitle};
+export {reducer, initialState, ContextApp};

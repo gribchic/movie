@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const MoviesComponent = ({movies, activeIndex}) => {
 
     const movieRender = movies.map((movie, index) =>
