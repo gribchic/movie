@@ -9,8 +9,9 @@ function MenuItem({genre, filter, focus}) {
 
     useEffect(() => {
         if (focus) {
-            // Move element into view when it is focused
             ref.current.focus();
+        } else {
+            ref.current.blur()
         }
     }, [focus]);
 

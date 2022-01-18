@@ -3,7 +3,7 @@ import Header from './HeaderComponent';
 import Menu from './MenuComponent';
 import useKeyPress from '../shared/useKeyPress';
 import MoviesComponent from './MoviesComponent';
-import {ContextApp} from '../shared/reducer';
+import {container, ContextApp} from '../shared/reducer';
 import MovieDetailsComponent from './MovieDetailsComponent';
 import {filteredMovies, movieByTitle} from '../shared/helpers'
 
@@ -76,7 +76,7 @@ const Main = () => {
     return (
         <>
             <div className="wrapper">
-                <Header/>
+                <Header focus={state.activeContainer === container.header}/>
                 <div className="d-flex">
                     <Menu
                         genres={state.genres}

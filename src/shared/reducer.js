@@ -91,6 +91,62 @@ function getArrowUpState(state) {
     return newState;
 }
 
+function getArrowRightState(state) {
+    let newState;
+
+    switch (state.activeContainer) {
+        case container.menu:
+
+            newState = {
+                ...state,
+                moviePosition: 0,
+                activeContainer: container.content,
+                menuPosition: -1,
+            }
+            break;
+
+        case container.content:
+            newState = state.moviePosition === filteredMovies(state.movies, state.movieFilter).length - 1
+                ? {...state}
+                : {...state, moviePosition: state.moviePosition + 1}
+            break;
+
+        case container.details:
+            newState = state.btnIndex === 2
+                ? {...state, btnIndex: 0}
+                : {...state, btnIndex: state.btnIndex + 1}
+            break;
+
+        default:
+            newState = state;
+            break;
+    }
+
+    return newState;
+}
+
+function getArrowLeftState(state) {
+    let newState;
+
+    switch (state.activeContainer) {
+        case container.content:
+            const moviePosition = state.moviePosition - 1;
+
+            newState = state.moviePosition === 0
+                ? {...state, activeContainer: container.menu, moviePosition, menuPosition: 0}
+                : {...state, moviePosition}
+            break;
+
+        case container.header:
+        case container.menu:
+        default:
+            newState = {...state};
+            break;
+    }
+
+    return newState;
+}
+
 function getBackState(state) {
     let newState;
 
@@ -145,59 +201,4 @@ function getEnterState(state) {
     return newState;
 }
 
-function getArrowRightState(state) {
-    let newState;
-
-    switch (state.activeContainer) {
-        case container.menu:
-
-            newState = {
-                ...state,
-                moviePosition: 0,
-                activeContainer: container.content,
-            }
-            break;
-
-        case container.content:
-            newState = state.moviePosition === filteredMovies(state.movies, state.movieFilter).length - 1
-                ? {...state}
-                : {...state, moviePosition: state.moviePosition + 1}
-            break;
-
-        case container.details:
-            newState = state.btnIndex === 2
-                ? {...state, btnIndex: 0}
-                : {...state, btnIndex: state.btnIndex + 1}
-            break;
-
-        default:
-            newState = state;
-            break;
-    }
-
-    return newState;
-}
-
-function getArrowLeftState(state) {
-    let newState;
-
-    switch (state.activeContainer) {
-        case container.content:
-            const moviePosition = state.moviePosition - 1;
-
-            newState = state.moviePosition === 0
-                ? {...state, activeContainer: container.menu, moviePosition}
-                : {...state, moviePosition}
-            break;
-
-        case container.header:
-        case container.menu:
-        default:
-            newState = {...state};
-            break;
-    }
-
-    return newState;
-}
-
-export {reducer, initialState, ContextApp};
+export {reducer, initialState, ContextApp, container};
