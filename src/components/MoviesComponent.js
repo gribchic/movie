@@ -13,9 +13,9 @@ const MovieItem = ({movie, focus}) => {
     }, [focus]);
 
     return (
-        <div className="col-md-2 mb-3 ">
+        <div className="movie-container col-md-2 mb-3">
             <a href="#"
-               className={`movie-container h-100 d-flex ${focus ? 'active' : ''}`}
+               className={`h-100 d-flex ${focus ? 'active' : ''}`}
                style={{
                    backgroundImage: `url(${movie.poster_path})`,
                    backgroundRepeat: 'no-repeat',
@@ -24,16 +24,7 @@ const MovieItem = ({movie, focus}) => {
                }}
                tabIndex={focus ? 0 : -1}
                ref={ref}
-            >
-                <img
-                    src={movie.poster_path}
-                    alt={movie.title}
-                    className="img-fluid w-100"
-                    style={{
-                        opacity: 0
-                    }}
-                />
-            </a>
+            />
         </div>
     );
 }
