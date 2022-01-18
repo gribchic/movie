@@ -1,6 +1,5 @@
 import React, {useEffect, useContext} from 'react';
 import Header from './HeaderComponent';
-import Footer from './FooterComponent';
 import Menu from './MenuComponent';
 import useKeyPress from '../shared/useKeyPress';
 import MoviesComponent from './MoviesComponent';
@@ -95,10 +94,8 @@ const Main = () => {
                                 activeIndex={state.moviePosition}
                             />
                     }
-
                 </div>
             </div>
-            <Footer/>
         </>
     );
 }

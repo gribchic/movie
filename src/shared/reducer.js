@@ -3,7 +3,6 @@ import {filteredMovies} from './helpers';
 
 const ContextApp = React.createContext(null);
 
-
 const container = {
     header: 0,
     menu: 1,
@@ -20,7 +19,6 @@ const initialState = {
     movieSelected: null,
     movieFilter: null,
     btnIndex: 0,
-    moviesLinks: []
 }
 
 const reducer = (state, action) => {
@@ -55,13 +53,14 @@ function getArrowDownState(state) {
         case container.header:
             newState = {...state, activeContainer: container.menu, menuPosition: 0};
             break;
+
         case container.menu:
             let menuPosition = state.menuPosition === state.genres.length - 1
                 ? state.menuPosition
                 : state.menuPosition + 1;
-
             newState = {...state, menuPosition}
             break;
+
         default:
             newState = {...state}
             break;
@@ -82,6 +81,7 @@ function getArrowUpState(state) {
 
             newState = {...state, activeContainer, menuPosition};
             break;
+
         case container.header:
         default:
             newState = {...state};
@@ -101,8 +101,8 @@ function getBackState(state) {
                 movieSelected: null,
                 activeContainer: container.content
             }
-            focusOnLink(newState.moviesLinks, newState.moviePosition);
             break;
+
         default:
             newState = state;
             break;
@@ -121,12 +121,14 @@ function getEnterState(state) {
                 movieFilter: null
             }
             break;
+
         case container.menu:
             newState = {
                 ...state,
                 movieFilter: state.genres[state.menuPosition]
             }
             break;
+
         case container.content:
             newState = {
                 ...state,
@@ -134,6 +136,7 @@ function getEnterState(state) {
                 activeContainer: container.details
             }
             break;
+
         default:
             newState = state;
             break;
@@ -147,29 +150,26 @@ function getArrowRightState(state) {
 
     switch (state.activeContainer) {
         case container.menu:
-            let links = document.querySelectorAll('a.movie-container');
+
             newState = {
                 ...state,
                 moviePosition: 0,
                 activeContainer: container.content,
-                moviesLinks: links
             }
-
-            focusOnLink(newState.moviesLinks, newState.moviePosition);
-
             break;
+
         case container.content:
             newState = state.moviePosition === filteredMovies(state.movies, state.movieFilter).length - 1
                 ? {...state}
                 : {...state, moviePosition: state.moviePosition + 1}
-
-            focusOnLink(newState.moviesLinks, newState.moviePosition);
             break;
+
         case container.details:
             newState = state.btnIndex === 2
                 ? {...state, btnIndex: 0}
                 : {...state, btnIndex: state.btnIndex + 1}
             break;
+
         default:
             newState = state;
             break;
@@ -188,11 +188,8 @@ function getArrowLeftState(state) {
             newState = state.moviePosition === 0
                 ? {...state, activeContainer: container.menu, moviePosition}
                 : {...state, moviePosition}
-
-            if (moviePosition > -1) {
-                focusOnLink(newState.moviesLinks, newState.moviePosition);
-            }
             break;
+
         case container.header:
         case container.menu:
         default:
@@ -201,10 +198,6 @@ function getArrowLeftState(state) {
     }
 
     return newState;
-}
-
-function focusOnLink(links, index) {
-    links[index].focus();
 }
 
 export {reducer, initialState, ContextApp};
