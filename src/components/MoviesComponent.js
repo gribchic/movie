@@ -7,6 +7,8 @@ const MovieItem = ({movie, focus}) => {
         if (focus) {
             // Move element into view when it is focused
             ref.current.focus();
+        } else {
+            ref.current.blur()
         }
     }, [focus]);
 
@@ -39,11 +41,11 @@ const MovieItem = ({movie, focus}) => {
 const MoviesComponent = ({movies, activeIndex}) => {
 
     const movieRender = movies.map((movie, index) =>
-            <MovieItem
-                key={movie.title}
-                focus={activeIndex === index}
-                movie={movie}
-            />
+        <MovieItem
+            key={movie.title}
+            focus={activeIndex === index}
+            movie={movie}
+        />
     )
     return (
         <main className="container-fluid">
