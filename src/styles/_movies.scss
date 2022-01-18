@@ -1,8 +1,10 @@
 .movie-container {
-  &.active {
+  &:focus-visible {
     transform: scale(1.05);
     box-shadow: $active-border;
+    outline: none;
   }
+
   //&:focus {
   //  transform: scale(1.05);
   //  box-shadow: inset $active-border;

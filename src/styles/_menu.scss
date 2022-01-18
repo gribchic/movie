@@ -2,24 +2,33 @@
   color: $white;
   opacity: .4;
 
-  &.active, &.hover {
+  &.active, &:focus-visible {
     opacity: 1;
+
     &:after {
-    content: "";
-    display: inline-block;
-    $size: 10px;
-    width: $size;
-    height: $size;
-    border: {
-      top: $border;
-      right: $border;
+      content: "";
+      display: inline-block;
+      $size: 10px;
+      width: $size;
+      height: $size;
+      border: {
+        top: $border;
+        right: $border;
+      }
+      transform: rotate(45deg);
     }
-    transform: rotate(45deg);
   }
+
+  &:focus-visible {
+    outline: none
   }
 
   &.active {
     box-shadow: inset $active-border;
+  }
+
+  &:focus {
+    color: $white;
   }
 
 
