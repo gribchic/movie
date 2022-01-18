@@ -37,10 +37,6 @@ const Menu = ({genres, activeIndex, filter}) => {
                 genre={genre}
                 filter={filter}
             />
-
-        // <li className="nav-item" key={genre}>
-        //     <a className={`nav-link ${activeIndex === index ? 'hover' : ''} ${filter === genre ? 'active' : ''}`}>{genre.charAt(0).toUpperCase() + genre.slice(1)}</a>
-        // </li>
     )
     return (
         <aside
