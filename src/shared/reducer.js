@@ -61,6 +61,18 @@ function getArrowDownState(state) {
             newState = {...state, menuPosition}
             break;
 
+        case container.content:
+            let moviePosition = state.moviePosition + 5;
+            const movies = state.movieFilter
+                ? state.movies.filter(movie => movie.genre_ids.indexOf(state.movieFilter) > -1)
+                : state.movies;
+
+            moviePosition = moviePosition >= movies.length
+                ? state.moviePosition
+                : moviePosition;
+            newState = {...state, moviePosition};
+            break;
+
         default:
             newState = {...state}
             break;
@@ -80,6 +92,15 @@ function getArrowUpState(state) {
                 : container.menu;
 
             newState = {...state, activeContainer, menuPosition};
+            break;
+
+        case container.content:
+            let moviePosition = state.moviePosition - 5;
+
+            moviePosition = moviePosition >= 0
+                ? moviePosition
+                : state.moviePosition;
+            newState = {...state, moviePosition};
             break;
 
         case container.header:
